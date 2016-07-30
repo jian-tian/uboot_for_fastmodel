@@ -203,7 +203,7 @@ static int show_dram_config(void)
 #ifdef CONFIG_NR_DRAM_BANKS
 	int i;
 
-	debug("\nRAM Configuration:\n");
+	printf("\nRAM Configuration:\n");
 	for (i = size = 0; i < CONFIG_NR_DRAM_BANKS; i++) {
 		size += gd->bd->bi_dram[i].size;
 		debug("Bank #%d: %llx ", i,
@@ -327,11 +327,11 @@ __weak phys_size_t board_reserve_ram_top(phys_size_t ram_size)
 
 static int setup_dest_addr(void)
 {
-	debug("Monitor len: %08lX\n", gd->mon_len);
+	printf("Monitor len: %08lX\n", gd->mon_len);
 	/*
 	 * Ram is setup, size stored in gd !!
 	 */
-	debug("Ram size: %08lX\n", (ulong)gd->ram_size);
+	printf("Ram size: %08lX\n", (ulong)gd->ram_size);
 #ifdef CONFIG_SYS_MEM_RESERVE_SECURE
 	/* Reserve memory for secure MMU tables, and/or security monitor */
 	gd->ram_size -= CONFIG_SYS_MEM_RESERVE_SECURE;
@@ -358,7 +358,7 @@ static int setup_dest_addr(void)
 	gd->ram_top += get_effective_memsize();
 	gd->ram_top = board_get_usable_ram_top(gd->mon_len);
 	gd->relocaddr = gd->ram_top;
-	debug("Ram top: %08lX\n", (ulong)gd->ram_top);
+	printf("Ram top: %08lX\n", (ulong)gd->ram_top);
 #if defined(CONFIG_MP) && (defined(CONFIG_MPC86xx) || defined(CONFIG_E500))
 	/*
 	 * We need to make sure the location we intend to put secondary core
@@ -740,8 +740,8 @@ static int setup_reloc(void)
 #endif
 	memcpy(gd->new_gd, (char *)gd, sizeof(gd_t));
 
-	debug("Relocation Offset is: %08lx\n", gd->reloc_off);
-	debug("Relocating to %08lx, new gd at %08lx, sp at %08lx\n",
+	printf("Relocation Offset is: %08lx\n", gd->reloc_off);
+	printf("Relocating to %08lx, new gd at %08lx, sp at %08lx\n",
 	      gd->relocaddr, (ulong)map_to_sysmem(gd->new_gd),
 	      gd->start_addr_sp);
 
@@ -773,6 +773,7 @@ static int jump_to_copy(void)
 	arch_setup_gd(gd->new_gd);
 	board_init_f_r_trampoline(gd->start_addr_sp);
 #else
+	printf("start_addr_sp = %08lx, new_gd = %08lx, relocadd = %08lx\n", gd->start_addr_sp, gd->new_gd, gd->relocaddr);
 	relocate_code(gd->start_addr_sp, gd->new_gd, gd->relocaddr);
 #endif
 
@@ -1027,6 +1028,7 @@ static init_fnc_t init_sequence_f[] = {
 	do_elf_reloc_fixups,
 #endif
 #if !defined(CONFIG_ARM) && !defined(CONFIG_SANDBOX)
+	printf("befor jump_to_copy:\n");
 	jump_to_copy,
 #endif
 	NULL,

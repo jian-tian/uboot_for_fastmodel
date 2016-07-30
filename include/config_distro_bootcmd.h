@@ -413,15 +413,15 @@
 		"done\0"                                                  \
 	\
 	\
-	"kernel_addr=0x41000000\0" \
-	"ram_addr=0x42000000\0" \
+	"kernel_addr=0x51080000\0" \
+	"ram_addr=0x80000000\0" \
 	"bootargs_base=setenv bootargs rw mem=256M " \
 		"console=ttyAMA0,115200n8\0" \
 	"bootargs_ram=setenv bootargs ${bootargs} " \
 		"root=/dev/ram rw initrd=${ram_addr}\0" \
 	\
 	"bootcmd_ram=run bootargs_base bootargs_ram; " \
-		"go 0xffffff8008080000 \0" \
+		"go 0x51080000 \0" \
 	\
 	\
 	"distro_bootcmd_zsw=" BOOTENV_SET_SCSI_NEED_INIT                      \

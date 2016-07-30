@@ -32,7 +32,7 @@
 
 /* CONFIG_SYS_TEXT_BASE needs to align with where ATF loads bl33.bin */
 /*#define CONFIG_SYS_TEXT_BASE		0x35000000*/
-#define CONFIG_SYS_TEXT_BASE		0x00000000 /*zsw*/
+#define CONFIG_SYS_TEXT_BASE		0x7ef77000 /*zsw*/
 
 #define CONFIG_NR_DRAM_BANKS		6
 #define PHYS_SDRAM_1			0x40000000
