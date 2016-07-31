@@ -31,9 +31,13 @@ static int do_go(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 		return CMD_RET_USAGE;
 
 	addr = simple_strtoul(argv[1], NULL, 16);
+	printf ("switch to el2\n");
+	armv8_switch_to_el2();
+	printf ("switch to el1\n");
+	armv8_switch_to_el2();
+	armv8_switch_to_el1();	
 
 	printf ("## Starting application at 0x%08lX ...\n", addr);
-
 	/*
 	 * pass address parameter as argv[0] (aka command name),
 	 * and all remaining args
