@@ -14,7 +14,7 @@
 	#size-cells = <2>;
 
 	psci {
-		compatible = "arm,psci-0.2";
+		compatible = "arm";
 		method = "smc";
 	};
 
@@ -40,16 +40,19 @@
 
 	};
 
-	gic: interrupt-controller@38001000 {
-		compatible = "arm,gic-400";
-		reg = <0x0 0x38001000 0 0x1000>, /* GICD */
-		      <0x0 0x38002000 0 0x2000>, /* GICC */
-		      <0x0 0x38004000 0 0x2000>, /* GICH */
-		      <0x0 0x38006000 0 0x2000>; /* GICV */
-		#address-cells = <0>;
-		#interrupt-cells = <3>;
+	gic: interrupt-controller@38000000 {
+		compatible = "arm,cortex-a9-gic";
+		#interrupt-cells = <0x3>;
+		#address-cells = <0x2>;
+		#size-cells = <0x2>;
+		ranges;
 		interrupt-controller;
-		interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_HIGH)>;
+		redistributor-stribe = <0x0 0x30000>;
+		reg = <0x0 0x38001000 0 0x1000>, /* GICD */
+		      <0x0 0x38002000 0 0x1000>; /* GICC */
+		interrupts = <0x1 0x9 0xff04>;
+		linux,phandle = <0x1>;
+		phandle = <0x1>;
 	};
 
 	timer {
@@ -84,7 +87,7 @@
 			compatible = "hisilicon,hi6220-mediactrl", "syscon";
 			reg = <0x0 0xf4410000 0x0 0x1000>;
 			#clock-cells = <1>;
-		};
+		}
 
 		pm_ctrl: pm_ctrl@f7032000 {
 			compatible = "hisilicon,hi6220-pmctrl", "syscon";
@@ -92,11 +95,19 @@
 			#clock-cells = <1>;
 		};
 */
-		uart0: uart@12015000 {	/* console */
+		v2m_clk24mhz:clk24mhz {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <24000000>;
+			clock-output-names = "v2m:clk24mhz";
+		};
+
+		uart0: uart@12000000 {	/* console */
 			compatible = "arm,pl011", "arm,primecell";
-			reg = <0x0 0x12015000 0x0 0x1000>;
+			reg = <0x0 0x12000000 0x0 0x1000>;
 			interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
 			clock = <19200000>;
+			clocks = <&v2m_clk24mhz &v2m_clk24mhz>;
 			clock-names = "uartclk", "apb_pclk";
 		};
 

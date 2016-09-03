@@ -22,11 +22,15 @@
 
 	chosen {
 		stdout-path = "serial0:115200n8";
+		bootargs = "console=ttyAMA0, 115200 earlycon=pl011,0x12000000 loglevel=9 root=/dev/ram0  rdinit=/init initcall_debug=y";
+		linux,initrd-start = <0x60800000>;
+		linux,initrd-end = <0x60B52203>;
+		/*linux,initrd-end = <0x6180B26B>;*/
 	};
 
 	memory@0 {
 		device_type = "memory";
-		reg = <0x0 0x0 0x0 0x40000000>;
+		reg = <0x00000000 0x40000000 0x0 0xC0000000>;
 	};
 };
 
