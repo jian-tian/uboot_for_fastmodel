@@ -24,8 +24,9 @@
 		stdout-path = "serial0:115200n8";
 		bootargs = "console=ttyAMA0, 115200 earlycon=pl011,0x12000000 loglevel=9 root=/dev/ram0  rdinit=/init initcall_debug=y";
 		linux,initrd-start = <0x60800000>;
-		linux,initrd-end = <0x60B52203>;
-		/*linux,initrd-end = <0x6180B26B>;*/
+		/*linux,initrd-end = <0x60B52203>;*/
+		linux,initrd-end = <0x60B534DE>;
+		/*linux,initrd-end = <0x6180b26B>;*/
 	};
 
 	memory@0 {

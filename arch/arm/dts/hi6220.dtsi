@@ -45,12 +45,11 @@
 		#interrupt-cells = <0x3>;
 		#address-cells = <0x2>;
 		#size-cells = <0x2>;
-		ranges;
 		interrupt-controller;
 		redistributor-stribe = <0x0 0x30000>;
 		reg = <0x0 0x38001000 0 0x1000>, /* GICD */
 		      <0x0 0x38002000 0 0x1000>; /* GICC */
-		interrupts = <0x1 0x9 0xff04>;
+		interrupts = <0x1 0x9 0xf04>;
 		linux,phandle = <0x1>;
 		phandle = <0x1>;
 	};
@@ -105,7 +104,7 @@
 		uart0: uart@12000000 {	/* console */
 			compatible = "arm,pl011", "arm,primecell";
 			reg = <0x0 0x12000000 0x0 0x1000>;
-			interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
+			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
 			clock = <19200000>;
 			clocks = <&v2m_clk24mhz &v2m_clk24mhz>;
 			clock-names = "uartclk", "apb_pclk";

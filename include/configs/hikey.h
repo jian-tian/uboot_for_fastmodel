@@ -53,6 +53,7 @@
 
 /* Generic Interrupt Controller Definitions */
 //#define GICD_BASE			0xf6801000
+#define CONFIG_GICV2
 #define GICD_BASE			0x38001000
 #define GICC_BASE			0x38002000
 
