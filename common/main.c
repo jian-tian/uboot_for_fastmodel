@@ -31,6 +31,7 @@ static void run_preboot_environment_command(void)
 		int prev = disable_ctrlc(1);	/* disable Control C checking */
 # endif
 
+		printf("preboot is %s\n", p);
 		run_command_list(p, -1, 0);
 
 # ifdef CONFIG_AUTOBOOT_KEYED
@@ -66,6 +67,7 @@ void main_loop(void)
 #endif /* CONFIG_UPDATE_TFTP */
 
 	s = bootdelay_process();
+	printf("boot cmd is %s\n", s);
 	if (cli_process_fdt(&s))
 		cli_secure_boot_cmd(s);
 

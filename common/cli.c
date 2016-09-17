@@ -33,6 +33,7 @@ int run_command(const char *cmd, int flag)
 	 * cli_run_command can return 0 or 1 for success, so clean up
 	 * its result.
 	 */
+	printf("cmd is %s\n", cmd);
 	if (cli_simple_run_command(cmd, flag) == -1)
 		return 1;
 
@@ -147,8 +148,10 @@ bool cli_process_fdt(const char **cmdp)
 {
 	/* Allow the fdt to override the boot command */
 	char *env = fdtdec_get_config_string(gd->fdt_blob, "bootcmd");
-	if (env)
+	if (env) {
 		*cmdp = env;
+		printf("get env from dts is %s\n", env);
+	}
 	/*
 	 * If the bootsecure option was chosen, use secure_boot_cmd().
 	 * Always use 'env' in this case, since bootsecure requres that the

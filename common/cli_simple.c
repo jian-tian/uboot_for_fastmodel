@@ -160,7 +160,8 @@ void cli_simple_process_macros(const char *input, char *output)
 	else
 		*(output - 1) = 0;
 
-	debug_parser("[PROCESS_MACROS] OUTPUT len %zd: \"%s\"\n",
+	//debug_parser("[PROCESS_MACROS] OUTPUT len %zd: \"%s\"\n",
+	printf("[PROCESS_MACROS] OUTPUT len %zd: \"%s\"\n",
 		     strlen(output_start), output_start);
 }
 
@@ -234,18 +235,20 @@ int cli_simple_run_command(const char *cmd, int flag)
 		} else {
 			str = sep;	/* no more commands for next pass */
 		}
-		debug_parser("token: \"%s\"\n", token);
+		//debug_parser("token: \"%s\"\n", token);
+		printf("token: \"%s\"\n", token);
 
 		/* find macros in this token and replace them */
 		cli_simple_process_macros(token, finaltoken);
 
+		printf("token after maros process: \"%s\"\n", token);
 		/* Extract arguments */
 		argc = cli_simple_parse_line(finaltoken, argv);
 		if (argc == 0) {
 			rc = -1;	/* no command at all */
 			continue;
 		}
-
+		printf("flag is %d, argc is %d, argv is 0x%x\n", flag, argc, argv);
 		if (cmd_process(flag, argc, argv, &repeatable, NULL))
 			rc = -1;
 
@@ -322,7 +325,7 @@ int cli_simple_run_command_list(char *cmd, int flag)
 			*next = '\0';
 			/* run only non-empty commands */
 			if (*line) {
-				debug("** exec: \"%s\"\n", line);
+				printf("** exec: \"%s\"\n", line);
 				if (cli_simple_run_command(line, 0) < 0) {
 					rcode = 1;
 					break;

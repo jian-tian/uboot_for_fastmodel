@@ -22,19 +22,26 @@ unsigned long do_go_exec(ulong (*entry)(int, char * const []), int argc,
 	return entry (argc, argv);
 }
 
+unsigned long do_go_kernel(ulong (*entry)(int, int, int, int), int dtb_addr, int res_r1, int res_r2, int res_r3)
+{
+	return entry(dtb_addr, res_r1, res_r2, res_r3);
+}
+
 static int do_go(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
 	ulong	addr, rc;
+	ulong	dtb_addr;
 	int     rcode = 0;
 
 	if (argc < 2)
 		return CMD_RET_USAGE;
 
 	addr = simple_strtoul(argv[1], NULL, 16);
+	dtb_addr = simple_strtoul(argv[2], NULL, 16);
 	printf ("switch to el2\n");
+	dcache_disable();
 	armv8_switch_to_el2();
 	printf ("switch to el1\n");
-	armv8_switch_to_el2();
 	armv8_switch_to_el1();	
 
 	printf ("## Starting application at 0x%08lX ...\n", addr);
@@ -42,7 +49,8 @@ static int do_go(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 	 * pass address parameter as argv[0] (aka command name),
 	 * and all remaining args
 	 */
-	rc = do_go_exec ((void *)addr, argc - 1, argv + 1);
+	//rc = do_go_exec ((void *)addr, argc - 1, argv + 1);
+	rc = do_go_kernel ((void *)addr, dtb_addr, 0, 0, 0);
 	if (rc != 0) rcode = 1;
 
 	printf ("## Application terminated, rc = 0x%lX\n", rc);

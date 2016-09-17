@@ -497,6 +497,7 @@ static int cmd_call(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
 	int result;
 
+	printf("cmdtp->name is %s\n", cmdtp->name);
 	result = (cmdtp->cmd)(cmdtp, flag, argc, argv);
 	if (result)
 		debug("Command failed, result=%d\n", result);

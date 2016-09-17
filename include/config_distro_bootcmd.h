@@ -421,15 +421,17 @@
 		"root=/dev/ram rw initrd=${ram_addr}\0" \
 	\
 	"bootcmd_ram=run bootargs_base bootargs_ram; " \
-		"go 0x51080000 \0" \
+		"go 0x51080000\0" \
 	\
 	\
 	"distro_bootcmd_zsw=" BOOTENV_SET_SCSI_NEED_INIT                      \
 		"for target in ${boot_targets}; do "                      \
 			"run bootcmd_${target}; "                         \
 		"done\0"\
-	"distro_bootcmd=" BOOTENV_SET_SCSI_NEED_INIT                      \
-			"run bootcmd_ram; "                         
+	"distro_bootcmd=go 0x51080000 0x60000000\0" BOOTENV_SET_SCSI_NEED_INIT                      \
+	\
+	\
+
 #ifndef CONFIG_BOOTCOMMAND
 #define CONFIG_BOOTCOMMAND "run distro_bootcmd"
 #endif
