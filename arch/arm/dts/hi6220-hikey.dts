@@ -13,7 +13,7 @@
 #include "hi6220.dtsi"
 
 / {
-	model = "HiKey Development Board";
+	model = "Sword's Test Board";
 	compatible = "hisilicon,hi6220-hikey", "hisilicon,hi6220";
 
 	aliases {
@@ -22,10 +22,10 @@
 
 	chosen {
 		stdout-path = "serial0:115200n8";
-		bootargs = "console=ttyAMA0, 115200 earlycon=pl011,0x12000000 loglevel=9 root=/dev/ram0  rdinit=/init initcall_debug=y";
-		linux,initrd-start = <0x60800000>;
+		bootargs = "console=ttyAMA0, 115200 earlycon=pl011,0x12000000 loglevel=9 init=/init initcall_debug=y";
+		/*linux,initrd-start = <0x60800000>;*/
 		/*linux,initrd-end = <0x60B52203>;*/
-		linux,initrd-end = <0x60B534DE>;
+		/*linux,initrd-end = <0x60B534DE>;*/
 		/*linux,initrd-end = <0x6180b26B>;*/
 	};
 
