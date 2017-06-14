@@ -104,7 +104,7 @@
 		uart0: uart@12000000 {	/* console */
 			compatible = "arm,pl011", "arm,primecell";
 			reg = <0x0 0x12000000 0x0 0x1000>;
-			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
+			interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
 			clock = <19200000>;
 			clocks = <&v2m_clk24mhz &v2m_clk24mhz>;
 			clock-names = "uartclk", "apb_pclk";
